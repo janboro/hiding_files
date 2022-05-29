@@ -14,13 +14,13 @@ class JPGHider:
             f.seek(offset + 2)  # FFD9 zajmuje 2 bajty
             return f.read()  # czytanie ukrytej wiadomosci
 
-    def hide_image(self, main_image_path, hidden_image_path):
-        with open(main_image_path, "ab") as main_image, open(hidden_image_path, "rb") as hidden_image:
-            hidden_content = hidden_image.read()
+    def hide_file(self, main_image_path, hidden_file_path):
+        with open(main_image_path, "ab") as main_image, open(hidden_file_path, "rb") as hidden_file:
+            hidden_content = hidden_file.read()
             main_image.write(hidden_content)
             
 
-    def unload_and_save_hidden_image(self, img_path: str, new_file_name: str):
+    def unload_and_save_hidden_file(self, img_path: str, new_file_name: str):
         with open(img_path, "rb") as f:
             content = f.read()
             offset = content.index(bytes.fromhex("FFD9"))
@@ -47,3 +47,4 @@ class JPGHider:
 anon_path = "anonymous.jpg"
 linux_path = "linux.png"
 hider = JPGHider()
+hider.cleanup_image(anon_path)
